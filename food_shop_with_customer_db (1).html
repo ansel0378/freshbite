@@ -1,0 +1,262 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:56px;background:#1a1a1a;}
+.logo{font-size:18px;font-weight:500;color:#fff;display:flex;align-items:center;gap:8px;}
+.logo i{color:#f97316;font-size:20px;}
+.nav-links{display:flex;gap:12px;align-items:center;}
+.nav-links a{color:#ccc;font-size:13px;text-decoration:none;cursor:pointer;}
+.nav-links a:hover{color:#fff;}
+.nav-btn{background:#f97316;color:#fff;border:none;padding:7px 16px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font-sans);}
+.nav-btn.outline{background:transparent;border:1px solid #555;color:#fff;}
+.hero{background:#1a1a1a;padding:3rem 1.5rem 2.5rem;text-align:center;}
+.hero h1{font-size:36px;font-weight:500;color:#fff;margin-bottom:10px;}
+.hero h1 span{color:#f97316;}
+.hero p{color:#aaa;font-size:15px;margin-bottom:1.5rem;}
+.hero-btns{display:flex;gap:10px;justify-content:center;}
+.btn-primary{background:#f97316;color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font-sans);}
+.btn-outline{background:transparent;color:#fff;border:1.5px solid #555;padding:10px 24px;border-radius:8px;font-size:14px;cursor:pointer;font-family:var(--font-sans);}
+.section{padding:2rem 1.5rem;background:var(--color-background-primary);}
+.section-title{font-size:18px;font-weight:500;color:var(--color-text-primary);text-align:center;margin-bottom:1.5rem;}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;max-width:640px;margin:0 auto;}
+.product-card{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:.9rem;border:0.5px solid var(--color-border-tertiary);cursor:pointer;}
+.product-card:hover{border-color:#f97316;}
+.product-img{width:100%;height:80px;background:#f97316;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;}
+.product-img i{font-size:32px;color:#fff;}
+.product-name{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px;}
+.product-price{font-size:13px;color:#f97316;font-weight:500;}
+.product-lock{font-size:11px;color:var(--color-text-secondary);margin-top:3px;display:flex;align-items:center;gap:3px;}
+.page{display:none;}
+.page.active{display:block;}
+.admin-bar{background:var(--color-background-secondary);border-bottom:0.5px solid var(--color-border-tertiary);padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.admin-bar span{font-size:13px;color:var(--color-text-secondary);}
+.admin-bar strong{color:var(--color-text-primary);}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;padding:1.5rem;background:var(--color-background-primary);}
+.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem;}
+.stat-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:6px;}
+.stat-val{font-size:22px;font-weight:500;color:var(--color-text-primary);}
+.stat-val.orange{color:#f97316;}
+.db-section{padding:0 1.5rem 2rem;}
+.db-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+.db-header h2{font-size:16px;font-weight:500;color:var(--color-text-primary);}
+.search-box{display:flex;align-items:center;gap:8px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:6px 12px;width:200px;}
+.search-box input{border:none;background:transparent;font-size:13px;color:var(--color-text-primary);outline:none;width:100%;font-family:var(--font-sans);}
+.search-box i{color:var(--color-text-secondary);font-size:15px;}
+.db-table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed;}
+.db-table th{text-align:left;padding:8px 10px;color:var(--color-text-secondary);font-weight:500;border-bottom:0.5px solid var(--color-border-tertiary);font-size:12px;}
+.db-table td{padding:9px 10px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.db-table tr:hover td{background:var(--color-background-secondary);}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;}
+.badge.active{background:var(--color-background-success);color:var(--color-text-success);}
+.badge.new{background:var(--color-background-info);color:var(--color-text-info);}
+.avatar{width:26px;height:26px;border-radius:50%;background:#f97316;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#fff;vertical-align:middle;margin-right:6px;}
+.del-btn{background:none;border:none;color:var(--color-text-danger);cursor:pointer;font-size:14px;padding:2px 4px;}
+.del-btn:hover{color:var(--color-text-danger);}
+.overlay-wrap{display:none;background:rgba(0,0,0,0.55);padding:2rem 1rem;align-items:center;justify-content:center;}
+.overlay-wrap.show{display:flex;}
+.modal{background:var(--color-background-primary);border-radius:var(--border-radius-lg);padding:1.75rem;width:340px;max-width:100%;border:0.5px solid var(--color-border-secondary);}
+.modal-tabs{display:flex;margin-bottom:1.25rem;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);overflow:hidden;}
+.tab{flex:1;padding:8px;font-size:13px;border:none;background:transparent;cursor:pointer;color:var(--color-text-secondary);font-family:var(--font-sans);}
+.tab.active{background:#f97316;color:#fff;font-weight:500;}
+.modal h2{font-size:17px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;}
+.modal p{font-size:13px;color:var(--color-text-secondary);margin-bottom:1.25rem;}
+.field{margin-bottom:12px;}
+.field label{display:block;font-size:12px;color:var(--color-text-secondary);margin-bottom:4px;}
+.field input{width:100%;padding:8px 11px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);font-size:13px;background:var(--color-background-secondary);color:var(--color-text-primary);font-family:var(--font-sans);outline:none;}
+.field input:focus{border-color:#f97316;box-shadow:0 0 0 2px rgba(249,115,22,0.15);}
+.submit-btn{width:100%;background:#f97316;color:#fff;border:none;padding:10px;border-radius:var(--border-radius-md);font-size:14px;font-weight:500;cursor:pointer;margin-top:4px;font-family:var(--font-sans);}
+.close-x{float:right;background:none;border:none;font-size:18px;cursor:pointer;color:var(--color-text-secondary);line-height:1;}
+.toast{display:none;align-items:center;gap:8px;background:var(--color-background-success);color:var(--color-text-success);padding:9px 14px;border-radius:var(--border-radius-md);font-size:13px;margin-bottom:1rem;}
+.toast.show{display:flex;}
+.empty-state{text-align:center;padding:2rem;color:var(--color-text-secondary);font-size:13px;}
+</style>
+
+<div id="page-shop" class="page active">
+  <nav class="nav">
+    <div class="logo"><i class="ti ti-bowl-spoon" aria-hidden="true"></i> FreshBite</div>
+    <div class="nav-links">
+      <a onclick="showAdmin()"><i class="ti ti-shield-lock" style="font-size:15px;vertical-align:-2px;margin-right:3px" aria-hidden="true"></i>Admin</a>
+      <button class="nav-btn outline" onclick="openModal('login')">ເຂົ້າສູ່ລະບົບ</button>
+      <button class="nav-btn" onclick="openModal('register')">ລົງທະບຽນ</button>
+    </div>
+  </nav>
+  <div class="hero">
+    <h1>ອາຫານ & ເຄື່ອງດື່ມ<br><span>ສົດໃໝ່ທຸກວັນ</span></h1>
+    <p>ສັ່ງເມນູທີ່ທ່ານຮັກ — ລົງທະບຽນເພື່ອເລີ່ມສັ່ງ</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="openModal('register')">ສ້າງບັນຊີ</button>
+      <button class="btn-outline" onclick="openModal('login')">ເຂົ້າສູ່ລະບົບ</button>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">ເມນູຂອງເຮົາ</div>
+    <div class="products">
+      <div class="product-card" onclick="openModal('register')">
+        <div class="product-img"><i class="ti ti-pizza" aria-hidden="true"></i></div>
+        <div class="product-name">Margherita Pizza</div>
+        <div class="product-price">₭85,000</div>
+        <div class="product-lock"><i class="ti ti-lock" style="font-size:11px"></i> ລົງທະບຽນກ່ອນ</div>
+      </div>
+      <div class="product-card" onclick="openModal('register')">
+        <div class="product-img"><i class="ti ti-cup" aria-hidden="true"></i></div>
+        <div class="product-name">ນ້ຳໝາກໄມ້ສົດ</div>
+        <div class="product-price">₭30,000</div>
+        <div class="product-lock"><i class="ti ti-lock" style="font-size:11px"></i> ລົງທະບຽນກ່ອນ</div>
+      </div>
+      <div class="product-card" onclick="openModal('register')">
+        <div class="product-img"><i class="ti ti-salad" aria-hidden="true"></i></div>
+        <div class="product-name">ສະຫຼັດສວນ</div>
+        <div class="product-price">₭60,000</div>
+        <div class="product-lock"><i class="ti ti-lock" style="font-size:11px"></i> ລົງທະບຽນກ່ອນ</div>
+      </div>
+      <div class="product-card" onclick="openModal('register')">
+        <div class="product-img"><i class="ti ti-coffee" aria-hidden="true"></i></div>
+        <div class="product-name">ກາເຟຜ່ານກ້ອນ</div>
+        <div class="product-price">₭45,000</div>
+        <div class="product-lock"><i class="ti ti-lock" style="font-size:11px"></i> ລົງທະບຽນກ່ອນ</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay-wrap" id="auth-overlay">
+    <div class="modal">
+      <button class="close-x" onclick="closeModal()"><i class="ti ti-x"></i></button>
+      <div class="modal-tabs">
+        <button class="tab active" id="tab-reg" onclick="switchTab('register')">ລົງທະບຽນ</button>
+        <button class="tab" id="tab-log" onclick="switchTab('login')">ເຂົ້າສູ່ລະບົບ</button>
+      </div>
+      <div id="form-reg">
+        <h2>ສ້າງບັນຊີໃໝ່</h2>
+        <p>ກະລຸນາຕື່ມຂໍ້ມູນຂ້າງລຸ່ມ</p>
+        <div class="toast" id="reg-toast"><i class="ti ti-circle-check"></i> ລົງທະບຽນສຳເລັດ!</div>
+        <div class="field"><label>ຊື່ເຕັມ</label><input type="text" id="r-name" placeholder="ເຊັ່ນ: ສົມຈິດ ສີຫາລາດ"></div>
+        <div class="field"><label>ອີເມລ</label><input type="email" id="r-email" placeholder="you@email.com"></div>
+        <div class="field"><label>ເບີໂທ</label><input type="text" id="r-phone" placeholder="020xxxxxxxx"></div>
+        <div class="field"><label>ລະຫັດຜ່ານ</label><input type="password" id="r-pass" placeholder="ສ້າງລະຫັດຜ່ານ"></div>
+        <button class="submit-btn" onclick="handleRegister()">ລົງທະບຽນ</button>
+      </div>
+      <div id="form-log" style="display:none">
+        <h2>ຍິນດີຕ້ອນຮັບກັບມາ</h2>
+        <p>ເຂົ້າສູ່ລະບົບດ້ວຍບັນຊີຂອງທ່ານ</p>
+        <div class="toast" id="log-toast"><i class="ti ti-circle-check"></i> ເຂົ້າສູ່ລະບົບສຳເລັດ!</div>
+        <div class="field"><label>ອີເມລ</label><input type="email" id="l-email" placeholder="you@email.com"></div>
+        <div class="field"><label>ລະຫັດຜ່ານ</label><input type="password" id="l-pass" placeholder="ລະຫັດຜ່ານ"></div>
+        <button class="submit-btn" onclick="handleLogin()">ເຂົ້າສູ່ລະບົບ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-admin" class="page">
+  <nav class="nav">
+    <div class="logo"><i class="ti ti-bowl-spoon" aria-hidden="true"></i> FreshBite <span style="color:#888;font-size:13px;margin-left:8px;">Admin</span></div>
+    <button class="nav-btn outline" onclick="showShop()">ກັບໄປໜ້າຮ້ານ</button>
+  </nav>
+  <div class="admin-bar">
+    <span>ຖານຂໍ້ມູນລູກຄ້າ</span>
+    <span id="last-updated" style="font-size:12px;"></span>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-label">ລູກຄ້າທັງໝົດ</div><div class="stat-val orange" id="stat-total">0</div></div>
+    <div class="stat"><div class="stat-label">ລົງທະບຽນໃໝ່ (ມື້ນີ້)</div><div class="stat-val" id="stat-today">0</div></div>
+    <div class="stat"><div class="stat-label">ຜູ້ໃຊ້ງານ</div><div class="stat-val" id="stat-active">0</div></div>
+  </div>
+  <div class="db-section">
+    <div class="db-header">
+      <h2><i class="ti ti-users" style="font-size:16px;vertical-align:-2px;margin-right:6px" aria-hidden="true"></i>ລາຍການລູກຄ້າ</h2>
+      <div class="search-box"><i class="ti ti-search" aria-hidden="true"></i><input type="text" id="search-input" placeholder="ຄົ້ນຫາຊື່ / ອີເມລ..." oninput="renderTable()"></div>
+    </div>
+    <div id="table-wrap">
+      <table class="db-table">
+        <thead><tr>
+          <th style="width:30%">ຊື່</th>
+          <th style="width:28%">ອີເມລ</th>
+          <th style="width:18%">ເບີໂທ</th>
+          <th style="width:14%">ສະຖານະ</th>
+          <th style="width:10%"></th>
+        </tr></thead>
+        <tbody id="customer-tbody"></tbody>
+      </table>
+      <div id="empty-msg" class="empty-state" style="display:none"><i class="ti ti-database-off" style="font-size:28px;display:block;margin-bottom:8px"></i>ຍັງບໍ່ມີລູກຄ້າລົງທະບຽນ</div>
+    </div>
+  </div>
+</div>
+
+<script>
+var customers = [
+  {id:1, name:'ສົມຈິດ ສີຫາລາດ', email:'somchit@email.com', phone:'02055512345', date:'2026-06-01', status:'active'},
+  {id:2, name:'ນາງ ຄຳພູ ວົງສາ', email:'khamphoo@email.com', phone:'02098765432', date:'2026-06-01', status:'new'},
+];
+var nextId = 3;
+function initials(name){var p=name.trim().split(' ');return p.length>1?(p[0][0]+p[p.length-1][0]).toUpperCase():name.slice(0,2).toUpperCase();}
+function updateStats(){
+  document.getElementById('stat-total').textContent=customers.length;
+  var today=new Date().toISOString().slice(0,10);
+  document.getElementById('stat-today').textContent=customers.filter(c=>c.date===today).length;
+  document.getElementById('stat-active').textContent=customers.filter(c=>c.status==='active').length;
+  document.getElementById('last-updated').textContent='ອັບເດດລ່າສຸດ: '+new Date().toLocaleTimeString();
+}
+function renderTable(){
+  var q=(document.getElementById('search-input').value||'').toLowerCase();
+  var list=customers.filter(c=>c.name.toLowerCase().includes(q)||c.email.toLowerCase().includes(q));
+  var tbody=document.getElementById('customer-tbody');
+  var empty=document.getElementById('empty-msg');
+  if(list.length===0){tbody.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  tbody.innerHTML=list.map(c=>`<tr>
+    <td><span class="avatar">${initials(c.name)}</span>${c.name}</td>
+    <td style="color:var(--color-text-secondary)">${c.email}</td>
+    <td>${c.phone}</td>
+    <td><span class="badge ${c.status}">${c.status==='new'?'ໃໝ່':'ໃຊ້ງານ'}</span></td>
+    <td><button class="del-btn" onclick="deleteCustomer(${c.id})" aria-label="ລຶບ"><i class="ti ti-trash"></i></button></td>
+  </tr>`).join('');
+}
+function deleteCustomer(id){
+  customers=customers.filter(c=>c.id!==id);
+  updateStats();renderTable();
+}
+function showAdmin(){
+  document.getElementById('page-shop').classList.remove('active');
+  document.getElementById('page-admin').classList.add('active');
+  updateStats();renderTable();
+}
+function showShop(){
+  document.getElementById('page-admin').classList.remove('active');
+  document.getElementById('page-shop').classList.add('active');
+}
+function openModal(tab){
+  document.getElementById('auth-overlay').classList.add('show');
+  switchTab(tab);
+}
+function closeModal(){document.getElementById('auth-overlay').classList.remove('show');}
+function switchTab(tab){
+  document.getElementById('form-reg').style.display=tab==='register'?'block':'none';
+  document.getElementById('form-log').style.display=tab==='login'?'block':'none';
+  document.getElementById('tab-reg').className='tab'+(tab==='register'?' active':'');
+  document.getElementById('tab-log').className='tab'+(tab==='login'?' active':'');
+}
+function handleRegister(){
+  var name=document.getElementById('r-name').value.trim();
+  var email=document.getElementById('r-email').value.trim();
+  var phone=document.getElementById('r-phone').value.trim();
+  var pass=document.getElementById('r-pass').value;
+  if(!name||!email||!pass){alert('ກະລຸນາຕື່ມຂໍ້ມູນໃຫ້ຄົບ');return;}
+  if(customers.find(c=>c.email===email)){alert('ອີເມລນີ້ໃຊ້ແລ້ວ');return;}
+  var today=new Date().toISOString().slice(0,10);
+  customers.push({id:nextId++,name,email,phone:phone||'-',date:today,status:'new'});
+  document.getElementById('reg-toast').classList.add('show');
+  document.getElementById('r-name').value='';
+  document.getElementById('r-email').value='';
+  document.getElementById('r-phone').value='';
+  document.getElementById('r-pass').value='';
+  setTimeout(()=>{document.getElementById('reg-toast').classList.remove('show');closeModal();},1500);
+}
+function handleLogin(){
+  var email=document.getElementById('l-email').value.trim();
+  var pass=document.getElementById('l-pass').value;
+  if(!email||!pass){alert('ກະລຸນາຕື່ມຂໍ້ມູນ');return;}
+  document.getElementById('log-toast').classList.add('show');
+  setTimeout(()=>{document.getElementById('log-toast').classList.remove('show');closeModal();},1500);
+}
+document.getElementById('auth-overlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+</script>
